@@ -3,7 +3,7 @@ import path from "node:path";
 import os from "node:os";
 import { marked } from "marked";
 
-const DEFAULT_SOURCE = "~/CoCwork/Reports";
+const DEFAULT_SOURCE = "./reports-source";
 const ROOT_DIR = path.resolve(process.cwd());
 const DIST_DIR = path.join(ROOT_DIR, "dist");
 const REPORTS_DIR = path.join(DIST_DIR, "reports");

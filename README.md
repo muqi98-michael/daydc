@@ -1,6 +1,6 @@
 # Daily Report Auto Pages
 
-一个最轻量的自动发布应用：从报告目录读取 `daily-insight-YYYY-MM-DD.(html|md)`，生成静态页面并部署到 GitHub Pages。
+一个最轻量的自动发布应用：把报告文件上传到仓库目录 `reports-source/`，按日期生成可筛选页面并自动部署到 GitHub Pages。
 
 ## 1. 报告命名规则
 
@@ -9,13 +9,13 @@
   - `daily-insight-2026-03-02.md`
 - 同一天如果同时存在 `.html` 和 `.md`，优先使用 `.html`。
 
-## 2. 目录配置（支持自定义）
+## 2. 数据目录
 
 数据源目录优先级（从高到低）：
 
 1. 命令行参数：`--source`
 2. 环境变量：`REPORTS_DIR`
-3. 默认目录：`~/CoCwork/Reports`
+3. 默认目录：`./reports-source`
 
 示例：
 
@@ -27,7 +27,7 @@ npm run build -- --source "/absolute/path/to/reports"
 REPORTS_DIR="/absolute/path/to/reports" npm run build
 ```
 
-## 3. 本地构建
+## 3. 上传报告并构建
 
 ```bash
 npm install
@@ -40,24 +40,18 @@ npm run build
 - `dist/reports.json`
 - `dist/reports/*.html`
 
-如果你要把本机默认目录 `~/CoCwork/Reports` 的报告同步到仓库并用于发布：
+报告请直接放进仓库目录 `reports-source/`，例如：
 
 ```bash
-npm run publish:local
+reports-source/daily-insight-2026-03-02.html
 ```
-
-这个命令会：
-
-1. 把本机报告同步到 `reports-source/`
-2. 用 `reports-source/` 构建 `dist/`
 
 ## 4. 部署到 GitHub Pages
 
 1. 把本目录推送到 GitHub 仓库（默认分支 `main` 或 `master`）。
 2. 在仓库 **Settings -> Pages** 中，将 Source 设为 **GitHub Actions**。
-3. GitHub Actions 默认从仓库内 `reports-source/` 读取报告（云端无法访问你本机 `~/CoCwork/Reports`）。
-4. 先执行 `npm run publish:local`，再把变更（`reports-source/`、`dist/`）推送到仓库。
-5. 推送后会自动触发 `.github/workflows/deploy-pages.yml` 完成部署。
+3. 每次把新报告文件提交到 `reports-source/` 并 `git push`。
+4. 推送后会自动触发 `.github/workflows/deploy-pages.yml` 完成部署。
 
 ## 5. 页面行为
 
