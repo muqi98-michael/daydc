@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Insight Reports</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+    }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: light-dark(#ffffff, #0b1220);
+      color: light-dark(#111827, #e5e7eb);
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 16px 24px;
+    }
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    select {
+      min-width: 220px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid #9ca3af;
+      background: transparent;
+      color: inherit;
+    }
+    iframe {
+      width: 100%;
+      height: calc(100vh - 130px);
+      border: 1px solid #9ca3af;
+      border-radius: 10px;
+      background: #ffffff;
+    }
+    .hint {
+      font-size: 14px;
+      color: light-dark(#4b5563, #9ca3af);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Daily Insight Reports</h2>
+    <div class="toolbar">
+      <label for="dateSelect">选择日期：</label>
+      <select id="dateSelect"></select>
+      <span id="hint" class="hint"></span>
+    </div>
+    <iframe id="reportFrame" title="report viewer"></iframe>
+  </div>
+
+  <script>
+    const dateSelect = document.getElementById("dateSelect");
+    const reportFrame = document.getElementById("reportFrame");
+    const hint = document.getElementById("hint");
+
+    function updateQuery(date) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("date", date);
+      history.replaceState({}, "", url.toString());
+    }
+
+    function readDateFromQuery() {
+      const url = new URL(window.location.href);
+      return url.searchParams.get("date");
+    }
+
+    function openReport(item) {
+      reportFrame.src = item.path;
+      hint.textContent = "当前日期：" + item.date;
+      updateQuery(item.date);
+    }
+
+    async function bootstrap() {
+      const res = await fetch("./reports.json", { cache: "no-store" });
+      const data = await res.json();
+      const reports = (data.reports || []).sort((a, b) => b.date.localeCompare(a.date));
+
+      if (!reports.length) {
+        dateSelect.innerHTML = "<option>暂无报告</option>";
+        dateSelect.disabled = true;
+        hint.textContent = "未检测到可展示的报告文件。";
+        return;
+      }
+
+      dateSelect.innerHTML = reports
+        .map((r) => `<option value="${r.date}">${r.date}</option>`)
+        .join("");
+
+      const queriedDate = readDateFromQuery();
+      const initial = reports.find((r) => r.date === queriedDate) || reports[0];
+      dateSelect.value = initial.date;
+      openReport(initial);
+
+      dateSelect.addEventListener("change", () => {
+        const selected = reports.find((r) => r.date === dateSelect.value);
+        if (selected) openReport(selected);
+      });
+    }
+
+    bootstrap().catch((err) => {
+      hint.textContent = "加载失败：" + (err && err.message ? err.message : String(err));
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "daily-report-pages",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-reports.mjs",
+    "dev:build": "node scripts/build-reports.mjs --source ~/CoCwork/Reports",
+    "sync:local": "node scripts/sync-local-reports.mjs",
+    "publish:local": "npm run sync:local && npm run build -- --source ./reports-source"
+  },
+  "dependencies": {
+    "marked": "^15.0.7"
+  }
+}
