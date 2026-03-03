@@ -8,6 +8,13 @@
     :root {
       color-scheme: light dark;
     }
+    * {
+      box-sizing: border-box;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+    }
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -15,16 +22,18 @@
       color: light-dark(#111827, #e5e7eb);
     }
     .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px 16px 24px;
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding: 12px 12px 8px;
     }
+    h2 { margin: 0 0 10px; }
     .toolbar {
       display: flex;
       gap: 12px;
       align-items: center;
       flex-wrap: wrap;
-      margin-bottom: 14px;
+      margin-bottom: 8px;
     }
     select {
       min-width: 220px;
@@ -35,10 +44,11 @@
       color: inherit;
     }
     iframe {
+      display: block;
       width: 100%;
-      height: calc(100vh - 130px);
+      height: calc(100vh - 92px);
       border: 1px solid #9ca3af;
-      border-radius: 10px;
+      border-radius: 6px;
       background: #ffffff;
     }
     .hint {
