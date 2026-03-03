@@ -74,8 +74,13 @@
       return url.searchParams.get("date");
     }
 
-    function openReport(item) {
-      reportFrame.src = item.path;
+    function withVersion(path, version) {
+      if (!version) return path;
+      return path + (path.includes("?") ? "&" : "?") + "v=" + encodeURIComponent(version);
+    }
+
+    function openReport(item, version) {
+      reportFrame.src = withVersion(item.path, version);
       hint.textContent = "当前日期：" + item.date;
       updateQuery(item.date);
     }
@@ -84,6 +89,7 @@
       const res = await fetch("./reports.json", { cache: "no-store" });
       const data = await res.json();
       const reports = (data.reports || []).sort((a, b) => b.date.localeCompare(a.date));
+      const buildVersion = data.generatedAt || String(Date.now());
 
       if (!reports.length) {
         dateSelect.innerHTML = "<option>暂无报告</option>";
@@ -99,11 +105,11 @@
       const queriedDate = readDateFromQuery();
       const initial = reports.find((r) => r.date === queriedDate) || reports[0];
       dateSelect.value = initial.date;
-      openReport(initial);
+      openReport(initial, buildVersion);
 
       dateSelect.addEventListener("change", () => {
         const selected = reports.find((r) => r.date === dateSelect.value);
-        if (selected) openReport(selected);
+        if (selected) openReport(selected, buildVersion);
       });
     }
 
