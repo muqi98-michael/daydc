@@ -1,231 +1,249 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>营销运作与场景化部每日洞察简报</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f0f2f5; color: #333; line-height: 1.6; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>营销运作与场景化部每日洞察简报</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f0f2f5; color: #333; }
 
-    /* Header */
-    .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%); color: #fff; padding: 32px 24px 24px; text-align: center; }
-    .header h1 { font-size: 1.8rem; font-weight: 700; letter-spacing: 1px; margin-bottom: 10px; }
-    .header .subtitle { font-size: 0.9rem; color: #a0b4c8; }
-    .header .date-range { display: inline-block; margin-top: 10px; background: rgba(255,255,255,0.1); border-radius: 20px; padding: 4px 16px; font-size: 0.85rem; color: #7eb8e8; }
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: white;
+    padding: 32px 40px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .header h1 { font-size: 26px; font-weight: 700; margin-bottom: 8px; letter-spacing: 1px; }
+  .header .subtitle { font-size: 14px; color: #a8b2d8; }
+  .header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-top: 10px;
+    margin-right: 8px;
+  }
 
-    /* Tabs */
-    .tabs-nav { display: flex; background: #fff; border-bottom: 1px solid #e0e4ea; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-    .tab-btn { flex: 1; padding: 16px 8px; border: none; background: none; cursor: pointer; font-size: 0.92rem; color: #666; font-weight: 500; transition: all 0.2s; position: relative; }
-    .tab-btn:hover { color: #0f3460; background: #f7f9fc; }
-    .tab-btn.active { color: #0f3460; font-weight: 700; }
-    .tab-btn.active::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: #0f3460; border-radius: 3px 3px 0 0; }
+  .tab-nav {
+    background: white;
+    display: flex;
+    border-bottom: 2px solid #e5e7eb;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    padding: 0 40px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    overflow-x: auto;
+  }
+  .tab-btn {
+    padding: 16px 24px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6b7280;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: #1a1a2e; }
+  .tab-btn.active { color: #1a1a2e; border-bottom-color: #e94560; font-weight: 600; }
 
-    /* Tab Content */
-    .tab-content { display: none; padding: 24px 20px; max-width: 1200px; margin: 0 auto; }
-    .tab-content.active { display: block; }
+  .tab-content { display: none; padding: 32px 40px; max-width: 1400px; margin: 0 auto; }
+  .tab-content.active { display: block; }
 
-    /* Cards */
-    .card { background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 24px; margin-bottom: 20px; }
-    .card-title { font-size: 1.1rem; font-weight: 700; color: #1a1a2e; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-    .card-title .icon { font-size: 1.2rem; }
+  .card {
+    background: white;
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    border: 1px solid #f0f0f0;
+  }
+  .card h2 {
+    font-size: 18px;
+    color: #1a1a2e;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #f0f2f5;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 
-    /* Chapter 1 Table */
-    .table-wrap { overflow-x: auto; border-radius: 8px; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; min-width: 900px; }
-    thead { background: #1a1a2e; color: #fff; }
-    th { padding: 12px 10px; text-align: left; font-weight: 600; white-space: nowrap; }
-    tbody tr:nth-child(even) { background: #f7f9fc; }
-    tbody tr:nth-child(odd) { background: #fff; }
-    tbody tr:hover { background: #edf2fb; }
-    td { padding: 10px 10px; vertical-align: top; border-bottom: 1px solid #eee; }
-    td:first-child { text-align: center; font-weight: 700; color: #0f3460; }
-    td a { color: #2563eb; text-decoration: none; font-size: 0.82rem; }
-    td a:hover { text-decoration: underline; }
-    .tag { display: inline-block; background: #e8f0fe; color: #1a56db; border-radius: 12px; padding: 2px 8px; font-size: 0.78rem; font-weight: 600; white-space: nowrap; }
-    .company-tag { background: #fef3c7; color: #b45309; }
+  .table-wrap { overflow-x: auto; border-radius: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead { background: #1a1a2e; color: white; }
+  thead th { padding: 12px 14px; text-align: left; font-weight: 600; white-space: nowrap; }
+  tbody tr:nth-child(even) { background: #f8f9fc; }
+  tbody tr:hover { background: #eef0ff; transition: background 0.2s; }
+  tbody td { padding: 12px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; line-height: 1.6; }
+  a { color: #0f3460; text-decoration: none; }
+  a:hover { text-decoration: underline; color: #e94560; }
 
-    /* PEST */
-    .pest-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    @media (max-width: 700px) { .pest-grid { grid-template-columns: 1fr; } }
-    .pest-item { background: #f7f9fc; border-radius: 8px; padding: 16px; border-left: 4px solid; }
-    .pest-item.p { border-color: #3b82f6; }
-    .pest-item.e { border-color: #10b981; }
-    .pest-item.s { border-color: #f59e0b; }
-    .pest-item.t { border-color: #8b5cf6; }
-    .pest-label { font-weight: 700; font-size: 0.95rem; margin-bottom: 8px; }
-    .pest-item.p .pest-label { color: #1d4ed8; }
-    .pest-item.e .pest-label { color: #065f46; }
-    .pest-item.s .pest-label { color: #92400e; }
-    .pest-item.t .pest-label { color: #5b21b6; }
-    .pest-item p { font-size: 0.88rem; color: #555; }
-    .source-link { font-size: 0.8rem; color: #2563eb; margin-top: 6px; display: block; }
+  .pest-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .pest-item { background: #f8f9fc; border-radius: 10px; padding: 18px; border-left: 4px solid #0f3460; }
+  .pest-item.economy { border-left-color: #10b981; }
+  .pest-item.society { border-left-color: #f59e0b; }
+  .pest-item.tech { border-left-color: #8b5cf6; }
+  .pest-item h4 { font-size: 14px; font-weight: 700; margin-bottom: 8px; color: #1a1a2e; }
+  .pest-item p { font-size: 13px; line-height: 1.7; color: #4b5563; }
 
-    /* Company cards */
-    .company-card { border: 1px solid #e5e7eb; border-radius: 10px; padding: 18px; margin-bottom: 16px; }
-    .company-name { font-size: 1.05rem; font-weight: 700; color: #1a1a2e; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-    .company-summary { font-size: 0.88rem; color: #555; margin-bottom: 12px; line-height: 1.7; }
-    .hotlist { list-style: none; padding: 0; }
-    .hotlist li { display: flex; gap: 8px; padding: 7px 0; border-bottom: 1px dashed #eee; font-size: 0.87rem; }
-    .hotlist li:last-child { border-bottom: none; }
-    .hotlist-num { font-weight: 700; color: #0f3460; min-width: 18px; }
-    .hotlist-content { flex: 1; }
-    .hotlist-link { display: block; color: #2563eb; font-size: 0.8rem; margin-top: 2px; }
-    .hotlist-link:hover { text-decoration: underline; }
+  .company-card { background: #f8f9fc; border-radius: 10px; padding: 20px; margin-bottom: 16px; border-left: 4px solid #e94560; }
+  .company-card h4 { font-size: 16px; font-weight: 700; margin-bottom: 10px; color: #1a1a2e; }
+  .company-card .summary { font-size: 13px; line-height: 1.7; color: #4b5563; margin-bottom: 14px; }
+  .company-card .top3 { font-size: 13px; }
+  .company-card .top3 ol { padding-left: 18px; }
+  .company-card .top3 li { margin-bottom: 8px; line-height: 1.6; }
+  .company-card .top3 .source-link { font-size: 11px; color: #9ca3af; display: block; }
 
-    /* Insights */
-    .insight-card { background: linear-gradient(135deg, #f0f7ff, #e8f4fd); border-radius: 10px; padding: 18px; margin-bottom: 14px; border-left: 4px solid #2563eb; }
-    .insight-title { font-weight: 700; color: #1a1a2e; margin-bottom: 8px; font-size: 0.95rem; }
-    .insight-body { font-size: 0.88rem; color: #444; line-height: 1.7; }
+  .tool-card { background: #f8f9fc; border-radius: 10px; padding: 20px; margin-bottom: 16px; border-top: 3px solid #0f3460; }
+  .tool-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: #1a1a2e; }
+  .tool-card .tag { display: inline-block; background: #0f3460; color: white; padding: 2px 10px; border-radius: 12px; font-size: 11px; margin-right: 6px; margin-bottom: 10px; }
+  .tool-card p { font-size: 13px; line-height: 1.7; color: #4b5563; margin-bottom: 12px; }
+  .tool-card ul { padding-left: 18px; font-size: 13px; color: #4b5563; }
+  .tool-card ul li { margin-bottom: 4px; line-height: 1.6; }
+  .tool-card .meta { font-size: 11px; color: #9ca3af; margin-top: 10px; }
 
-    /* Chapter 3 PM tools */
-    .pm-tool { border: 1px solid #e5e7eb; border-radius: 10px; padding: 18px; margin-bottom: 16px; }
-    .pm-tool-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; }
-    .pm-tool-num { background: #1a1a2e; color: #fff; border-radius: 6px; padding: 2px 8px; font-size: 0.85rem; font-weight: 700; }
-    .pm-tool-tag { background: #ede9fe; color: #6d28d9; border-radius: 12px; padding: 2px 10px; font-size: 0.8rem; font-weight: 600; }
-    .pm-tool-title { font-weight: 700; color: #1a1a2e; font-size: 0.97rem; }
-    .pm-tool-summary { font-size: 0.88rem; color: #555; margin-bottom: 12px; line-height: 1.7; }
-    .guide-title { font-size: 0.85rem; font-weight: 700; color: #374151; margin-bottom: 6px; }
-    .guide-list { list-style: none; padding: 0; }
-    .guide-list li { font-size: 0.85rem; color: #555; padding: 3px 0 3px 16px; position: relative; }
-    .guide-list li::before { content: '→'; position: absolute; left: 0; color: #6d28d9; font-weight: 700; }
-    .pm-meta { margin-top: 10px; font-size: 0.8rem; color: #888; }
-    .pm-meta a { color: #2563eb; }
+  .insight-item { background: linear-gradient(135deg, #f0f2ff, #fafaff); border-radius: 10px; padding: 18px; margin-bottom: 14px; border-left: 4px solid #8b5cf6; }
+  .insight-item h4 { font-size: 14px; font-weight: 700; margin-bottom: 8px; color: #1a1a2e; }
+  .insight-item p { font-size: 13px; line-height: 1.7; color: #4b5563; }
 
-    /* Section headers */
-    .section-header { font-size: 1.05rem; font-weight: 700; color: #1a1a2e; margin: 24px 0 14px; padding-bottom: 8px; border-bottom: 2px solid #e5e7eb; display: flex; align-items: center; gap: 6px; }
+  .direction-tag { display: inline-block; background: #eef0ff; color: #4338ca; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; margin: 0 2px; }
 
-    /* Footer */
-    .footer { text-align: center; padding: 24px 16px; color: #888; font-size: 0.82rem; margin-top: 12px; }
-    .footer strong { color: #0f3460; }
+  .footer { background: #1a1a2e; color: #9ca3af; text-align: center; padding: 20px; font-size: 12px; margin-top: 32px; }
 
-    /* Badges */
-    .badge { display: inline-block; background: #dcfce7; color: #166534; border-radius: 12px; padding: 2px 10px; font-size: 0.78rem; font-weight: 600; margin-left: 8px; }
-    .badge.new { background: #fee2e2; color: #991b1b; }
-  </style>
+  @media (max-width: 768px) {
+    .tab-nav { padding: 0 8px; }
+    .tab-content { padding: 16px; }
+    .pest-grid { grid-template-columns: 1fr; }
+    .header { padding: 20px 16px; }
+    .header h1 { font-size: 18px; }
+  }
+</style>
 </head>
 <body>
 
 <div class="header">
-  <h1>📊 营销运作与场景化部每日洞察简报</h1>
-  <div class="subtitle">Marketing Operations & Scenario Department · Daily Intelligence Report</div>
-  <div class="date-range">⏱ 生成时间：2026年03月05日 &nbsp;|&nbsp; 数据范围：2026年03月04日 至 2026年03月05日</div>
+  <h1>🚀 营销运作与场景化部每日洞察简报</h1>
+  <div class="subtitle">AI产品洞察 · 企业SaaS热点 · PM工具前沿</div>
+  <div>
+    <span class="badge">📅 生成时间：2026年03月05日</span>
+    <span class="badge">📊 数据范围：2026-03-04 至 2026-03-05</span>
+    <span class="badge">🤖 由 Claude AI 自动生成</span>
+  </div>
 </div>
 
-<!-- Tabs Navigation -->
-<div class="tabs-nav">
-  <button class="tab-btn active" onclick="switchTab('ch1', this)">🌐 第一章·AI趋势 Top 10</button>
-  <button class="tab-btn" onclick="switchTab('ch2', this)">🏢 第二章·SaaS热点洞察</button>
-  <button class="tab-btn" onclick="switchTab('ch3', this)">🛠️ 第三章·PM工具与工作模式</button>
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab(event,'ch1')">🌐 第一章：全球AI趋势 Top 10</button>
+  <button class="tab-btn" onclick="switchTab(event,'ch2')">🏢 第二章：SaaS热点洞察</button>
+  <button class="tab-btn" onclick="switchTab(event,'ch3')">🛠️ 第三章：AI原生PM工具</button>
 </div>
 
 <!-- Chapter 1 -->
 <div id="ch1" class="tab-content active">
   <div class="card">
-    <div class="card-title"><span class="icon">🌐</span>全球AI趋势 Top 10 热点</div>
+    <h2>🌐 全球AI趋势 Top 10 · 2026-03-04 至 2026-03-05</h2>
     <div class="table-wrap">
       <table>
         <thead>
-          <tr>
-            <th>排名</th>
-            <th>热点标题</th>
-            <th>涉及厂商</th>
-            <th>技术方向</th>
-            <th>核心看点</th>
-            <th>日期</th>
-            <th>链接</th>
-          </tr>
+          <tr><th>排名</th><th>热点标题</th><th>涉及厂商</th><th>技术方向</th><th>核心看点</th><th>来源日期</th><th>链接</th></tr>
         </thead>
         <tbody>
           <tr>
-            <td>🥇 1</td>
-            <td><strong>Anthropic Claude登顶App Store，超越ChatGPT</strong></td>
-            <td><span class="tag company-tag">Anthropic</span></td>
-            <td><span class="tag">AI Agent</span><br><span class="tag">竞争格局</span></td>
-            <td>Claude因拒绝军事用途引发公众支持，免费用户增长超60%，日注册量翻4倍，App Store登顶ChatGPT。Anthropic估值达3800亿美元，获30亿Series G。</td>
+            <td style="text-align:center;font-weight:700;color:#e94560;font-size:15px;">1</td>
+            <td><strong>Anthropic推出跨平台记忆迁移，可导入ChatGPT/Gemini历史对话</strong></td>
+            <td>Anthropic（Claude）</td>
+            <td><span class="direction-tag">AI Agent</span><span class="direction-tag">用户留存</span></td>
+            <td>Claude推出跨平台对话历史导入功能，用户可将ChatGPT、Gemini历史对话迁移至Claude，系统自动提取偏好、沟通风格实现个性化增强。数据仅用于个性化而非模型训练。标志AI平台竞争从模型能力转向用户留存与生态黏性。</td>
             <td>2026-03-02</td>
-            <td><a href="https://fortune.com/2026/03/02/anthropic-claude-dario-amodei-number-one-app-store-openai-chatgpt-sam-altman-department-war/" target="_blank">🔗 Fortune</a></td>
+            <td><a href="https://www.webanditnews.com/2026/03/02/anthropics-bold-memory-play-claude-now-ingests-your-chatgpt-history-to-win-the-ai-loyalty-war/" target="_blank">原文</a></td>
           </tr>
           <tr>
-            <td>🥈 2</td>
-            <td><strong>Anthropic收购Vercept，全力押注Computer Use</strong></td>
-            <td><span class="tag company-tag">Anthropic</span></td>
-            <td><span class="tag">AI Agent</span><br><span class="tag">计算机操控</span></td>
-            <td>收购西雅图视觉感知AI公司Vercept（9人团队），Claude Sonnet 4.6在OSWorld基准达72.5%，接近人类水平，可完成跨Tab复杂工作流。</td>
+            <td style="text-align:center;font-weight:700;color:#e94560;font-size:15px;">2</td>
+            <td><strong>Google Gemini 3.1 Flash Lite向开发者正式开放API</strong></td>
+            <td>Google（Gemini）</td>
+            <td><span class="direction-tag">多模态</span><span class="direction-tag">长上下文</span></td>
+            <td>2026年3月3日Google发布Gemini 3.1 Flash Lite至开发者API。Gemini 3.1 Pro在16项基准测试中占据13项榜首，ARC-AGI-2达77.1%，逻辑推理能力行业领先，Flash Lite面向快速集成场景主打性价比。</td>
             <td>2026-03-03</td>
-            <td><a href="https://channelpostmea.com/2026/03/03/anthropic-acquires-vercept-to-advance-claudes-computer-use-capabilities/" target="_blank">🔗 ChannelPost</a></td>
+            <td><a href="https://llm-stats.com/llm-updates" target="_blank">原文</a></td>
           </tr>
           <tr>
-            <td>🥉 3</td>
-            <td><strong>OpenAI签下五角大楼，政府AI竞争白热化</strong></td>
-            <td><span class="tag company-tag">OpenAI</span></td>
-            <td><span class="tag">AI治理</span><br><span class="tag">政府采购</span></td>
-            <td>美财政部、HHS终止Anthropic合同转向OpenAI。OpenAI完成1100亿美元融资（估值7300亿），亚马逊500亿、英伟达300亿、软银300亿入场。</td>
+            <td style="text-align:center;font-weight:700;color:#e94560;font-size:15px;">3</td>
+            <td><strong>Kimi K2.5发布，视频生成+智能体能力超越三大美国顶尖模型</strong></td>
+            <td>月之暗面（Kimi）</td>
+            <td><span class="direction-tag">多模态</span><span class="direction-tag">AI Agent</span></td>
+            <td>Moonshot AI推出Kimi K2.5，具备视频理解和智能体执行能力，在相关基准测试中声称超过三大美国主流模型。K2.5已跻身API平台OpenRouter第四大最常用模型，开发者采纳势头强劲。</td>
+            <td>2026-03-04</td>
+            <td><a href="https://www.cnbc.com/2026/03/01/forget-deepseek-of-chinas-5-new-ai-models-ubs-prefers-this-one.html" target="_blank">原文</a></td>
+          </tr>
+          <tr>
+            <td style="text-align:center;font-weight:700;color:#e94560;font-size:15px;">4</td>
+            <td><strong>ByteDance Seedance 2.0视频生成模型发布，豆包稳居中国第一</strong></td>
+            <td>字节跳动（豆包）</td>
+            <td><span class="direction-tag">多模态</span><span class="direction-tag">视频生成</span></td>
+            <td>字节跳动推出Seedance 2.0视频生成模型，豆包为中国最受欢迎AI聊天应用，已在春晚进行品牌植入。AI视频生成成为2026年新一轮竞争高地，多模态战场全面铺开。</td>
+            <td>2026-03-04</td>
+            <td><a href="https://www.cnbc.com/2026/01/28/chinese-tech-companies-accelerate-ai-model-rollouts-us-rivals-deepseek-moonshot-kimi.html" target="_blank">原文</a></td>
+          </tr>
+          <tr>
+            <td style="text-align:center;font-weight:700;color:#e94560;font-size:15px;">5</td>
+            <td><strong>MiniMax M2.5性能媲美Claude Opus 4.6，价格更低引发开发者切换潮</strong></td>
+            <td>MiniMax</td>
+            <td><span class="direction-tag">大模型</span><span class="direction-tag">性价比</span></td>
+            <td>MiniMax于2月中旬发布M2.5，UBS分析师认为性能可比肩Claude Opus 4.6，价格更具竞争力，大量开发者从DeepSeek V3.2切换。公司今年1月在香港上市，中国AI赛道黑马身份确立。</td>
+            <td>2026-03-01</td>
+            <td><a href="https://www.cnbc.com/2026/03/01/forget-deepseek-of-chinas-5-new-ai-models-ubs-prefers-this-one.html" target="_blank">原文</a></td>
+          </tr>
+          <tr>
+            <td style="text-align:center;font-weight:700;color:#e94560;font-size:15px;">6</td>
+            <td><strong>百度Ernie 4.5 Turbo开源，推出文图音视四模态融合模型</strong></td>
+            <td>百度（文心）</td>
+            <td><span class="direction-tag">多模态</span><span class="direction-tag">开源</span></td>
+            <td>百度发布Ernie 4.5 Turbo和X1 Turbo，支持文本、图像、音频、视频四模态融合，并宣布开源战略转向（跟进DeepSeek路线）。Ernie X1声称以比DeepSeek更低成本实现同等推理性能。</td>
+            <td>2026-03-04</td>
+            <td><a href="https://www.business-standard.com/technology/tech-news/baidu-founder-criticises-deepseek-ai-rivalry-text-based-model-llm-125042500892_1.html" target="_blank">原文</a></td>
+          </tr>
+          <tr>
+            <td style="text-align:center;font-weight:700;color:#e94560;font-size:15px;">7</td>
+            <td><strong>ServiceNow推出Autonomous Workforce，L1 IT服务台AI助理速度提升99%</strong></td>
+            <td>ServiceNow</td>
+            <td><span class="direction-tag">AI Agent</span><span class="direction-tag">企业自动化</span></td>
+            <td>ServiceNow于3月2日正式发布Autonomous Workforce平台，L1 Service Desk AI Specialist可自主处理IT工单，速度比人工快99%。整合Moveworks推出EmployeeWorks门户，2026年AI收入目标超10亿美元，宣告"企业智能体协作元年"。</td>
+            <td>2026-03-02</td>
+            <td><a href="https://www.intelligentcio.com/me/2026/03/02/servicenow-launches-autonomous-workforce-that-thinks-and-acts-adds-moveworks-to-the-servicenow-ai-platform/" target="_blank">原文</a></td>
+          </tr>
+          <tr>
+            <td style="text-align:center;font-weight:700;color:#e94560;font-size:15px;">8</td>
+            <td><strong>Salesforce FY2026 Q4创纪录，Agentforce签约2.9万笔ARR达8亿美元</strong></td>
+            <td>Salesforce</td>
+            <td><span class="direction-tag">AI Agent</span><span class="direction-tag">企业SaaS</span></td>
+            <td>Salesforce发布FY2026 Q4财报，收入112亿美元同比增12%，Agentforce签约29,000笔，ARR达8亿美元。同时宣布收购AI商品发现平台Cimulate，布局智能电商，FY2027收入指引458-462亿美元。</td>
+            <td>2026-02-25</td>
+            <td><a href="https://thesiliconreview.com/2026/03/salesforce-record-q4-fiscal-2026-results-agentforce" target="_blank">原文</a></td>
+          </tr>
+          <tr>
+            <td style="text-align:center;font-weight:700;color:#e94560;font-size:15px;">9</td>
+            <td><strong>MCP智能体安全隐患曝光：过度权限与日志缺失成企业AI新威胁</strong></td>
+            <td>行业通用</td>
+            <td><span class="direction-tag">MCP</span><span class="direction-tag">AI安全</span><span class="direction-tag">AI治理</span></td>
+            <td>随着MCP智能体规模化部署（另有23%机构计划2026年落地），安全研究发现MCP存在过度权限、操作日志不完整等风险，被称为"AI身份暗物质"。Anthropic MCP与Google A2A协议成行业基础规范，标准化与安全并重成智能体部署核心议题。</td>
+            <td>2026-03-04</td>
+            <td><a href="https://thehackernews.com/2026/03/ai-agents-next-wave-identity-dark.html" target="_blank">原文</a></td>
+          </tr>
+          <tr>
+            <td style="text-align:center;font-weight:700;color:#e94560;font-size:15px;">10</td>
+            <td><strong>Vibe Coding冲击开源生态：Cursor ARR超20亿，AI代码引发维护危机</strong></td>
+            <td>Replit / Cursor / Lovable</td>
+            <td><span class="direction-tag">Vibe Coding</span><span class="direction-tag">开源</span></td>
+            <td>Cursor ARR超20亿美元、Lovable估值66亿美元，Vibe Coding赛道高速扩张。但研究指出AI工具大量自动采集开源代码并生成低质量贡献，开源维护者面临劳动力危机。Anything平台荣获2026年度第一Vibe Coding平台（3月3日独立评测），赛道进入洗牌整合期。</td>
             <td>2026-03-03</td>
-            <td><a href="https://www.technology.org/2026/03/03/us-government-dumps-anthropic-state-treasury-and-hhs-jump-ship-to-openai/" target="_blank">🔗 Technology.org</a></td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td><strong>DeepSeek V3.1上线，神秘"MODEL1"引发猜测</strong></td>
-            <td><span class="tag company-tag">深度求索</span></td>
-            <td><span class="tag">长上下文</span><br><span class="tag">开源</span></td>
-            <td>V3.1上下文扩至100万token；GitHub出现28次神秘"MODEL1"标识符，被认为是全新架构模型；V4发布预期升温，论文提出Engram条件记忆机制。</td>
-            <td>2026-03-04</td>
-            <td><a href="https://www.guancha.cn/economy/2026_02_11_806838.shtml" target="_blank">🔗 观察者网</a></td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td><strong>Kimi K2.5全球API调用量登顶，估值升至48亿美元</strong></td>
-            <td><span class="tag company-tag">月之暗面</span></td>
-            <td><span class="tag">长上下文</span><br><span class="tag">出海</span></td>
-            <td>OpenRouter平台调用量超越Gemini和Claude暂列全球第一；2月Token消耗超4万亿；估值攀升48亿美元，走全球开发者生态路线，不上市不站队。</td>
-            <td>2026-03-04</td>
-            <td><a href="https://c.m.163.com/news/a/KN0ULBUH05118O92.html" target="_blank">🔗 网易新闻</a></td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td><strong>字节豆包宣布3月发布Doubao 2.0及多模态矩阵</strong></td>
-            <td><span class="tag company-tag">字节跳动</span></td>
-            <td><span class="tag">多模态</span><br><span class="tag">视频生成</span></td>
-            <td>即将推出Doubao 2.0、图像生成模型Seedream 5.0及视频生成模型SeedDance 2.0；豆包月活2.26亿，语音情感拟真度国内领先，日活稳居第一。</td>
-            <td>2026-03-04</td>
-            <td><a href="https://oldtang.com/14547.html" target="_blank">🔗 老唐笔记</a></td>
-          </tr>
-          <tr>
-            <td>7</td>
-            <td><strong>阿里千问Qwen 3.5即将发布，新增图像生成模型</strong></td>
-            <td><span class="tag company-tag">阿里巴巴</span></td>
-            <td><span class="tag">多模态</span><br><span class="tag">开源</span></td>
-            <td>The Information证实Qwen 3.5即将发布；已新增Qwen-Image图像生成模型；开源系列全球榜单持续霸榜，企业级综合能力无明显短板。</td>
-            <td>2026-03-04</td>
-            <td><a href="https://36kr.com/p/3671464976429833" target="_blank">🔗 36氪</a></td>
-          </tr>
-          <tr>
-            <td>8</td>
-            <td><strong>Claude Sonnet 4.6发布，百万Token上下文+计算机操控</strong></td>
-            <td><span class="tag company-tag">Anthropic</span></td>
-            <td><span class="tag">长上下文</span><br><span class="tag">AI Agent</span></td>
-            <td>2月17日发布，支持100万Token上下文（Beta），可处理完整代码库；OSWorld任务完成率72.5%；可在Anthropic API、Amazon Bedrock、Google Cloud Vertex AI访问。</td>
-            <td>2026-02-17</td>
-            <td><a href="https://www.marktechpost.com/2026/02/17/anthropic-releases-claude-4-6-sonnet-with-1-million-token-context-to-solve-complex-coding-and-search-for-developers/" target="_blank">🔗 MarkTechPost</a></td>
-          </tr>
-          <tr>
-            <td>9</td>
-            <td><strong>国产模型Token消耗超美，Token出海成趋势</strong></td>
-            <td><span class="tag company-tag">DeepSeek/Kimi/MiniMax</span></td>
-            <td><span class="tag">竞争格局</span><br><span class="tag">出海</span></td>
-            <td>2026年2月，OpenRouter平台国产模型Token消耗占比超60%，首次超越美国；谷歌、xAI、OpenAI海外份额增速下滑，部分负增长；Token出海成战略制高点。</td>
-            <td>2026-03-03</td>
-            <td><a href="https://finance.sina.cn/2026-02-28/detail-inhpimsq6188831.d.html" target="_blank">🔗 新浪财经</a></td>
-          </tr>
-          <tr>
-            <td>10</td>
-            <td><strong>Google与OpenAI员工联署抗议军事AI应用</strong></td>
-            <td><span class="tag company-tag">Google / OpenAI</span></td>
-            <td><span class="tag">AI治理</span><br><span class="tag">伦理</span></td>
-            <td>"我们不会被分裂"公开信短短数日从数百人增至900余人（OpenAI近100名，Google近800名），反对AI用于伊朗军事打击及完全自主武器，AI治理伦理再成焦点。</td>
-            <td>2026-03-03</td>
-            <td><a href="https://www.cnbc.com/2026/03/03/anthropic-fallout-iran-war-tech-military-ai.html" target="_blank">🔗 CNBC</a></td>
+            <td><a href="https://www.infoq.com/news/2026/02/ai-floods-close-projects/" target="_blank">原文</a></td>
           </tr>
         </tbody>
       </table>
@@ -235,105 +253,95 @@
 
 <!-- Chapter 2 -->
 <div id="ch2" class="tab-content">
-
   <div class="card">
-    <div class="card-title"><span class="icon">🔍</span>PEST宏观环境洞察（聚焦中国）</div>
+    <h2>🔍 PEST宏观环境洞察（聚焦中国）</h2>
     <div class="pest-grid">
-      <div class="pest-item p">
-        <div class="pest-label">🏛 政治 Policy</div>
-        <p>"十五五"开局之年，《人工智能+行动》将AI促进与安全治理并列推进。新网络安全法施行，《生成式AI服务管理暂行办法》落地，要求算法可解释、数据可追溯，医疗/金融/政务AI SaaS合规门槛显著提高。对SaaS营销：合规能力成为To B核心卖点。</p>
-        <a href="https://www.news.cn/20260128/3b2f11906fd74ca397fef9996c805a60/c.html" target="_blank" class="source-link">🔗 新华社：2026年中国AI发展趋势前瞻</a>
+      <div class="pest-item">
+        <h4>🏛️ 政治（Policy）</h4>
+        <p>中国持续深化"AI+"战略，2027年AI在六大核心领域渗透率超70%，2030年超90%。AI治理框架持续完善，AI安全评估备案、数据本地化要求收紧。对SaaS企业影响：合规成为To B销售核心卖点，本土SaaS在数据安全上具备天然优势，需加快建设可解释AI治理能力。</p>
       </div>
-      <div class="pest-item e">
-        <div class="pest-label">💰 经济 Economy</div>
-        <p>2026年2月全球SaaS股票单日暴跌6%，市值蒸发2850亿美元；Salesforce、Workday等巨头市值缩水超40%。企业采购SaaS决策周期拉长，"先POC后采购"成常态，ROI可量化成交付核心诉求。华为入局ERP加剧中小企业市场竞争。</p>
-        <a href="https://www.huxiu.com/article/4835165.html" target="_blank" class="source-link">🔗 虎嗅：2026年2月3日全球SaaS股票暴跌</a>
+      <div class="pest-item economy">
+        <h4>💰 经济（Economy）</h4>
+        <p>企业客户对SaaS采购更加谨慎，ROI诉求增强，"先POC后采购"成常态。AI云服务降价（中国模型成本约为美国的1/6至1/4），大幅降低SaaS中AI落地门槛。中小企业在政府补贴和低价AI双重驱动下，成最快爆发的细分赛道。</p>
       </div>
-      <div class="pest-item s">
-        <div class="pest-label">👥 社会 Society</div>
-        <p>混合办公常态化加速企业智能化工具需求，"人效提升"成数字化最强驱动力。企业宁愿为明确减少人力成本的AI SaaS买单。AI智能体在财务报表、HR招聘、差旅审批、企业知识库等高频重复场景落地最快，形成强采购意愿。</p>
-        <a href="https://www.163.com/dy/article/K3VMUM0H051181NO.html" target="_blank" class="source-link">🔗 网易：AI Agent时代，SaaS走向升级还是毁灭？</a>
+      <div class="pest-item society">
+        <h4>👥 社会（Society）</h4>
+        <p>混合办公常态化驱动协作类SaaS增长；企业对"人效提升"诉求空前强烈，AI自动化工具成核心采购驱动力。2026年被普遍认为是"AI Agent元年"，从聊天机器人升级为能自主完成复杂任务的智能体，将重塑企业工作流程和岗位职责。</p>
       </div>
-      <div class="pest-item t">
-        <div class="pest-label">⚙️ 技术 Technology</div>
-        <p>AI Native SaaS商业模式从"席位订阅"向"AaaS（Agent即服务）"演进，按工作单元（AWU）计费成新方向。MCP协议（模型上下文协议）加速普及，成为连接SaaS与大模型的关键基础设施。无代码/低代码工具（Vibe Coding）赋能业务侧直接构建工作流。</p>
-        <a href="https://36kr.com/p/3671549180945033" target="_blank" class="source-link">🔗 36氪：2026年，AI SaaS的潮水正在迅猛来袭</a>
+      <div class="pest-item tech">
+        <h4>⚙️ 技术（Technology）</h4>
+        <p>MCP（模型上下文协议）和Google A2A协议正成为AI Agent互操作行业基础标准；多模态RAG正从高级特性变为标配；低代码/Vibe Coding快速降低AI应用门槛。主要AI大厂发布节奏已从数月压缩到2-3周，SaaS厂商需加快AI能力迭代。</p>
       </div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-title"><span class="icon">🏢</span>重点公司动态跟踪</div>
+    <h2>🏢 重点公司动态跟踪</h2>
 
     <div class="company-card">
-      <div class="company-name">🔵 SAP</div>
-      <div class="company-summary">SAP在AI浪潮冲击下面临双重压力：整体SaaS市场估值重估（国际巨头集体缩水超40%），以及Salesforce、Anthropic等AI原生竞争者蚕食市场。SAP加快ERP产品线AI化，强调数据主权与企业级合规部署优势。华为宣布入局ERP软件市场，对SAP在中国的布局构成本土竞争压力。</div>
-      <ul class="hotlist">
-        <li><span class="hotlist-num">1</span><div class="hotlist-content">SAP加速ERP产品AI化转型，强调合规与数据主权优势<a href="https://blog.csdn.net/SAP_CLOUD/article/details/148982612" target="_blank" class="hotlist-link">🔗 用友、金蝶慌不慌？SAP释放新信号</a></div></li>
-        <li><span class="hotlist-num">2</span><div class="hotlist-content">全球SaaS市值集体缩水，SAP等巨头面临AI颠覆压力<a href="https://t.cj.sina.com.cn/articles/view/1653478724/628e154400101er4m" target="_blank" class="hotlist-link">🔗 AI掀起"万亿级SaaS末日"？</a></div></li>
-        <li><span class="hotlist-num">3</span><div class="hotlist-content">华为宣布入局ERP软件，国内SaaS竞争格局生变<a href="https://www.stcn.com/article/detail/820260.html" target="_blank" class="hotlist-link">🔗 巨头进军腹地？华为宣布入局ERP软件业务</a></div></li>
-      </ul>
+      <h4>💼 Salesforce</h4>
+      <div class="summary">Salesforce于2026年3月初发布FY2026第四季度财报，收入112亿美元，同比增长12%，创历史新高。Agentforce（AI智能体平台）成最大亮点：签约笔数达29,000笔，ARR达8亿美元，增势强劲，大量来自现有企业客户的平台内扩张。公司宣布收购AI商品发现平台Cimulate，布局智能电商，正面挑战Adobe Commerce、Shopify和SAP。FY2027收入指引458-462亿美元，管理层预计AI驱动增长将在12-18个月加速兑现。</div>
+      <div class="top3"><strong>TOP 3热点：</strong><ol>
+        <li>FY2026 Q4创纪录：收入112亿美元，Agentforce ARR达8亿美元，签约29,000笔<span class="source-link"><a href="https://thesiliconreview.com/2026/03/salesforce-record-q4-fiscal-2026-results-agentforce" target="_blank">查看原文 →</a></span></li>
+        <li>收购Cimulate：切入AI驱动的商品发现与智能电商，挑战Adobe/Shopify/SAP<span class="source-link"><a href="https://futurumgroup.com/insights/will-salesforces-cimulate-acquisition-redefine-ai-driven-product-discovery/" target="_blank">查看原文 →</a></span></li>
+        <li>IT自动化扩张：Agentforce IT Service吸引超180家企业客户，IT运维成新战场<span class="source-link"><a href="https://www.ciodive.com/news/salesforce-agentforce-IT-services-marc-benioff/807103/" target="_blank">查看原文 →</a></span></li>
+      </ol></div>
     </div>
 
-    <div class="company-card">
-      <div class="company-name">☁️ Salesforce <span class="badge">Agentforce ARR $800M</span></div>
-      <div class="company-summary">Q4财报显示Agentforce势头强劲：累计成交29,000笔交易（环比增50%），年化ARR达$800M，已交付2.4亿智能工作单元（AWU）。Salesforce以"数据驱动AI"为核心叙事，通过Data Cloud强化数据治理，主张AaaS是SaaS正确进化方向而非终结者。按AWU计费的新商业模式正在重塑企业软件定价逻辑。</div>
-      <ul class="hotlist">
-        <li><span class="hotlist-num">1</span><div class="hotlist-content">Agentforce Q4 ARR达$800M，环比增50%，成交29,000笔<a href="https://www.salesforceben.com/what-the-saas-sell-off-got-wrong-about-salesforce-ai-and-agentforce/" target="_blank" class="hotlist-link">🔗 What the SaaS Sell-Off Got Wrong About Salesforce</a></div></li>
-        <li><span class="hotlist-num">2</span><div class="hotlist-content">Salesforce：数据治理是AI可信的基础，Agentforce是AI协同平台<a href="https://www.techzine.eu/news/applications/139123/salesforce-sees-agentforce-as-the-answer-to-pressure-on-the-saas-market/" target="_blank" class="hotlist-link">🔗 Salesforce sees Agentforce as answer to SaaS market pressure</a></div></li>
-        <li><span class="hotlist-num">3</span><div class="hotlist-content">SaaS季报证明AI不是威胁，增长数据反驳市场悲观情绪<a href="https://www.techzine.eu/news/infrastructure/139144/quarterly-figures-from-saas-players-contradict-ai-doubts/" target="_blank" class="hotlist-link">🔗 Quarterly figures from SaaS players contradict AI doubts</a></div></li>
-      </ul>
+    <div class="company-card" style="border-left-color:#0f3460;">
+      <h4>🌐 SAP</h4>
+      <div class="summary">SAP计划于2026年3月19日举办"All Things Business AI"最新洞察与实操演示专场活动。SAP强调其"神经符号AI"差异化战略——将概率性AI模型与确定性企业记录系统（Systems of Record）融合，构建可信企业级AI架构。SAP的2026年营收已有85%在2025年底完成预订，企业客户信任度高。SAP与Salesforce在ERP+CRM数据打通方向的集成合作，成为推动AI商业价值落地的重要路径。</div>
+      <div class="top3"><strong>TOP 3热点：</strong><ol>
+        <li>3月19日AI专场活动：最新Business AI创新与实操演示即将揭晓<span class="source-link"><a href="https://community.sap.com/t5/artificial-intelligence-learning-group-blog-posts/all-things-business-ai-latest-insights-updates-amp-live-demos-march-19-2026/ba-p/14323302" target="_blank">查看原文 →</a></span></li>
+        <li>神经符号AI战略：将概率模型与确定性ERP记录系统融合，构建企业级可信AI<span class="source-link"><a href="https://news.sap.com/japan/2026/01/0130_-ai-in-2026-five-defining-themes/" target="_blank">查看原文 →</a></span></li>
+        <li>2026年85%营收预订完成：企业客户高信任度，增长可见度强<span class="source-link"><a href="https://www.cnbc.com/2025/10/23/europes-big-ai-hope-sap-books-85percent-of-2026-revenue-as-deals-boom-.html" target="_blank">查看原文 →</a></span></li>
+      </ol></div>
     </div>
 
-    <div class="company-card">
-      <div class="company-name">🟠 用友网络</div>
-      <div class="company-summary">用友积极推进AI转型，旗下YonGPT企业服务大模型已接入DeepSeek、豆包、通义千问等主流大模型，核心产品BIP持续升级AI能力。2025年Q4单季度实现扭亏，全年亏损相比2024年收窄30%以上，AI战略初显成效。借助国产大模型生态爆发，用友重塑"大企业优先"产品定位，以AI能力为差异化核心武器。</div>
-      <ul class="hotlist">
-        <li><span class="hotlist-num">1</span><div class="hotlist-content">用友Q4扭亏，YonGPT接入多家主流大模型<a href="https://36kr.com/p/3640279622464263" target="_blank" class="hotlist-link">🔗 用友季度实现扭亏，持续亏损5年的金蝶，能否跨越盈利门槛？</a></div></li>
-        <li><span class="hotlist-num">2</span><div class="hotlist-content">华为入局ERP，用友面临新竞争压力<a href="https://www.stcn.com/article/detail/820260.html" target="_blank" class="hotlist-link">🔗 巨头进军腹地？华为宣布入局ERP软件业务，SaaS概念股走低</a></div></li>
-        <li><span class="hotlist-num">3</span><div class="hotlist-content">国内SaaS厂商AI转型加速，AaaS商业模式探索<a href="https://36kr.com/p/3372771863746697" target="_blank" class="hotlist-link">🔗 AI Agent是中国SaaS的解药？</a></div></li>
-      </ul>
+    <div class="company-card" style="border-left-color:#10b981;">
+      <h4>🇨🇳 用友（Yongyou）</h4>
+      <div class="summary">用友网络积极推进AI+云转型，旗舰产品BIP已集成DeepSeek、豆包、通义千问等主流大模型，并推出企业服务大模型YonGPT。2025年Q4实现单季盈利，全年营收估计达91.7-92.7亿元，结束连续多年亏损局面。2026年战略聚焦AI原生重构，与国内头部大模型厂商深度绑定，力图在中小企业和大型集团客户中建立AI差异化优势。</div>
+      <div class="top3"><strong>TOP 3热点：</strong><ol>
+        <li>BIP集成DeepSeek等多大模型，推出YonGPT企业服务大模型<span class="source-link"><a href="https://36kr.com/p/3640279622464263" target="_blank">查看原文 →</a></span></li>
+        <li>Q4实现盈利，营收转正，AI+云战略初见成效<span class="source-link"><a href="https://36kr.com/p/3640279622464263" target="_blank">查看原文 →</a></span></li>
+        <li>2026年聚焦AI原生重构，与主流大模型厂商深度绑定<span class="source-link"><a href="https://tele.ofweek.com/2025-04/ART-8320506-8420-30660900.html" target="_blank">查看原文 →</a></span></li>
+      </ol></div>
     </div>
 
-    <div class="company-card">
-      <div class="company-name">🔴 金蝶国际 <span class="badge">AI合同超1.5亿</span></div>
-      <div class="company-summary">金蝶AI商业化进程超预期，2025年H1 AI合同签约超1.5亿元，管理层目标2030年AI收入占比30%。五大AI智能体：金钥财报（财务分析）、ChatBI（数据查询）、招聘智能体、差旅智能体、企业知识智能体，覆盖企业高频刚需场景。持续亏损5年后，金蝶能否凭AI商业化实现盈利跨越，成为市场关注焦点。</div>
-      <ul class="hotlist">
-        <li><span class="hotlist-num">1</span><div class="hotlist-content">金蝶五大AI智能体上线，覆盖财务、HR、差旅、知识管理<a href="https://www.163.com/dy/article/K3VMUM0H051181NO.html" target="_blank" class="hotlist-link">🔗 企业管理软件之问：AI Agent时代，SaaS走向升级还是毁灭？</a></div></li>
-        <li><span class="hotlist-num">2</span><div class="hotlist-content">金蝶AI合同签约超1.5亿，2030年AI收入目标占比30%<a href="https://36kr.com/p/3640279622464263" target="_blank" class="hotlist-link">🔗 用友季度实现扭亏，持续亏损5年的金蝶，能否跨越盈利门槛？</a></div></li>
-        <li><span class="hotlist-num">3</span><div class="hotlist-content">2026年AI SaaS财务软件深度测评，金蝶入选降本增效优选名单<a href="https://www.jujiaoit.cn/news/26319.html" target="_blank" class="hotlist-link">🔗 2026SaaS财务软件深度测评：谁才是中小企业的"降本增效"神器？</a></div></li>
-      </ul>
+    <div class="company-card" style="border-left-color:#f59e0b;">
+      <h4>🇨🇳 金蝶（Kingdee）</h4>
+      <div class="summary">金蝶提出"企业管理AI"（EMAI）概念，发布苍穹AI Agent平台2.0，搭载五大AI智能体，覆盖战略、运营、执行全链路。2025年H1 AI合同签约额超1.5亿元，管理层目标2030年AI收入占比达30%。CEO刘仲文强调中小企业需要"开箱即用的AI应用"，以低门槛、高价值为差异化定位。AIGO转型方法论（评估架构、实施、治理、运营）已形成可复制推广的AI落地路径。</div>
+      <div class="top3"><strong>TOP 3热点：</strong><ol>
+        <li>苍穹AI Agent平台2.0发布：五大AI智能体覆盖全链路企业管理<span class="source-link"><a href="https://www.kingdee.com/article/1853273585133621249.html" target="_blank">查看原文 →</a></span></li>
+        <li>H1 AI签约超1.5亿元，目标2030年AI收入占比30%<span class="source-link"><a href="https://36kr.com/p/3640279622464263" target="_blank">查看原文 →</a></span></li>
+        <li>提出EMAI概念与AIGO方法论，构建可复制AI落地体系<span class="source-link"><a href="https://m.kingdee.com/market/ai.html" target="_blank">查看原文 →</a></span></li>
+      </ol></div>
     </div>
 
-    <div class="company-card">
-      <div class="company-name">🟡 HubSpot（补充覆盖）</div>
-      <div class="company-summary">HubSpot在AI驱动CRM领域以"中小企业友好型AI CRM"为定位，主打易用性与低入门门槛，通过AI自动化营销流程（邮件、SEO、内容生成）吸引中小企业客户。面对Salesforce Agentforce冲击，HubSpot持续在中小企业细分市场构建差异化护城河，2026年持续入选全球CRM对比榜单前三名。</div>
-      <ul class="hotlist">
-        <li><span class="hotlist-num">1</span><div class="hotlist-content">HubSpot入选2025年30家CRM系统对比年度优选<a href="https://zhuanlan.zhihu.com/p/669401080" target="_blank" class="hotlist-link">🔗 一文读懂CRM，2025年30家CRM系统对比（近年最全）</a></div></li>
-        <li><span class="hotlist-num">2</span><div class="hotlist-content">AI CRM竞争加剧，HubSpot以中小企业定位应对Salesforce冲击<a href="https://36kr.com/p/3671549180945033" target="_blank" class="hotlist-link">🔗 2026年，AI SaaS的潮水正在迅猛来袭</a></div></li>
-        <li><span class="hotlist-num">3</span><div class="hotlist-content">SaaS厂商季报显示AI集成产品增长强劲，HubSpot保持竞争态势<a href="https://www.techzine.eu/news/infrastructure/139144/quarterly-figures-from-saas-players-contradict-ai-doubts/" target="_blank" class="hotlist-link">🔗 Quarterly figures from SaaS players contradict AI doubts</a></div></li>
-      </ul>
-    </div>
-
-    <div style="background:#fff8f0; border: 1px solid #fed7aa; border-radius: 10px; padding: 16px; margin-bottom: 16px;">
-      <div style="font-weight: 700; color: #c2410c; margin-bottom: 8px;">🆕 新进入者扫描：华为入局ERP</div>
-      <p style="font-size: 0.88rem; color: #555; line-height: 1.7;">华为近期宣布入局ERP软件业务，直接冲击用友、金蝶，引发SaaS概念股走低。华为凭借政府与央企渠道优势、硬件+软件整合能力，有望快速渗透高端政务与国企ERP市场。这一动向或将重塑国内企业软件格局，值得持续追踪。 <a href="https://www.stcn.com/article/detail/820260.html" target="_blank" style="color:#2563eb;">🔗 来源</a></p>
+    <div class="company-card" style="border-left-color:#8b5cf6;">
+      <h4>⚡ ServiceNow（补充覆盖）</h4>
+      <div class="summary">ServiceNow于3月2日正式推出Autonomous Workforce平台，发布L1 Service Desk AI Specialist，可自主处理IT服务台工单，处理速度比人工快99%。完成对Moveworks的整合，推出EmployeeWorks统一员工服务门户，将对话AI、企业搜索与工作流自动化合而为一。2026年AI相关收入预计突破10亿美元，将2026年定位为"企业智能体协作元年"。</div>
+      <div class="top3"><strong>TOP 3热点：</strong><ol>
+        <li>发布Autonomous Workforce，L1 IT服务台AI专家上线，速度提升99%<span class="source-link"><a href="https://www.intelligentcio.com/me/2026/03/02/servicenow-launches-autonomous-workforce-that-thinks-and-acts-adds-moveworks-to-the-servicenow-ai-platform/" target="_blank">查看原文 →</a></span></li>
+        <li>推出EmployeeWorks：整合Moveworks，打造统一员工智能服务门户<span class="source-link"><a href="https://theaieconomy.substack.com/p/servicenow-autonomous-workforce-employeeworks-ai" target="_blank">查看原文 →</a></span></li>
+        <li>2026年AI收入目标超10亿美元，将智能体协作定为全年战略核心<span class="source-link"><a href="https://www.servicenow.com/workflow/it-transformation/whats-next-ai-2026.html" target="_blank">查看原文 →</a></span></li>
+      </ol></div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-title"><span class="icon">💡</span>营销启示与行动建议</div>
-    <div class="insight-card">
-      <div class="insight-title">🛡️ 启示1：AI合规能力是新的To B销售壁垒</div>
-      <div class="insight-body">政策层面AI可解释性与数据安全要求趋严。营销推广中，应主动将合规资质（等保认证、数据本地化部署、模型可追溯性）前置为卖点，尤其面向金融、医疗、政务类客户时，"安全可控"的叙事比"智能先进"更具说服力，合规能力应成为销售话术与产品页核心模块。</div>
+    <h2>💡 营销启示与行动建议</h2>
+    <div class="insight-item">
+      <h4>🎯 启示一：AI Agent已从"概念"变为"可量化ROI的产品"</h4>
+      <p>Salesforce Agentforce签约29,000笔、ServiceNow AI助理速度提升99%——这些可量化业务指标正成为企业AI采购的核心说服点。营销团队应将"AI功能清单"转化为"业务效率提升数据"，以客户案例+ROI计算器的形式推进商机转化。</p>
     </div>
-    <div class="insight-card">
-      <div class="insight-title">📊 启示2：从"功能展示"到"ROI量化"转变定位</div>
-      <div class="insight-body">Salesforce以AWU计费、金蝶以合同签约额证明AI价值——市场教育已进入"省了多少钱/人"阶段。产品营销应将降本增效数据（人力节省X%、处理效率提升X倍、决策周期缩短X天）作为核心传播内容，案例优先选择可量化ROI的真实客户场景。</div>
+    <div class="insight-item">
+      <h4>💰 启示二：中国大模型价格战为SaaS厂商AI内嵌提供红利窗口</h4>
+      <p>中国AI模型推理成本仅为美国同类产品的1/6至1/4，且多家国内厂商均开放API集成。SaaS厂商应抓住此窗口期，快速将AI能力内嵌到核心产品，以"AI原生"为新卖点，同时关注数据不出境、模型备案等合规要求。</p>
     </div>
-    <div class="insight-card">
-      <div class="insight-title">🎯 启示3：华为入局带来渠道策略调整机会</div>
-      <div class="insight-body">华为进入ERP市场将压缩用友、金蝶在大型国企的市场空间，但同时为中小企业SaaS厂商提供下沉机会。针对100-500人规模企业，强调"开箱即用、快速部署、AI智能体即插即用"优势，可作为阶段性差异化定位，在大厂激战大客户时快速扩充中腰部客户基数。</div>
+    <div class="insight-item">
+      <h4>📦 启示三："开箱即用"是中小企业AI采购的决策关键词</h4>
+      <p>金蝶CEO明确指出中小企业需要"开箱即用的AI应用"，MiniMax M2.5以比肩顶级模型的能力和更低价格快速获客——降低AI使用门槛是市场突破口。营销场景化设计应聚焦"5分钟上手"、"无需IT介入"、"即装即用"等体验标签。</p>
     </div>
   </div>
 </div>
@@ -341,113 +349,96 @@
 <!-- Chapter 3 -->
 <div id="ch3" class="tab-content">
   <div class="card">
-    <div class="card-title"><span class="icon">🛠️</span>AI原生PM工具与工作模式 · 5大方向</div>
+    <h2>🛠️ AI原生PM工具与工作模式 · 2026-03-04 至 2026-03-05</h2>
 
-    <div class="pm-tool">
-      <div class="pm-tool-header">
-        <span class="pm-tool-num">01</span>
-        <span class="pm-tool-tag">AI产品原型设计</span>
-      </div>
-      <div class="pm-tool-title">Gamma Generate API正式开放，打通AI内容生产闭环</div>
-      <div class="pm-tool-summary">Gamma于2026年1月正式开放Generate API（GA版），开发者可编程方式批量生成演示文稿、文档和网站，30-60秒生成完整带专业布局的Deck。支持嵌入Figma、Miro、Airtable、Power BI等工具，产品原型可直接嵌入演示材料，打通"原型设计→展示传播"全链路。2026年2月新增Ultra定价层，持续扩展企业级功能。导出支持PPTX和Google Slides格式。</div>
-      <div class="guide-title">📚 学习指南要点：</div>
-      <ul class="guide-list">
-        <li>将Gamma Generate API集成至PRD/MRD生成工作流，实现"需求文档→演示材料"一键转化</li>
-        <li>利用Gamma+Figma嵌入，制作可交互的产品演示，提升评审效率</li>
-        <li>关注Gamma API在批量生成场景（如多客户方案、培训材料）的应用潜力</li>
-        <li>对比Gamma与Kimi PPT在中文内容生成质量上的差异，选择适合团队的工具</li>
-        <li>定期跟踪Gamma定价策略，评估团队订阅ROI</li>
+    <div class="tool-card">
+      <h4>1. AI产品原型设计</h4>
+      <span class="tag">Gamma 3.0</span><span class="tag">v0</span><span class="tag">Figma AI</span>
+      <p><strong>Gamma 3.0 Agent + API正式GA，AI演示进入平台化时代</strong><br><br>Gamma推出3.0版本，核心升级是Gamma Agent（可联网搜索+引用落地）以及Generate API（2026年1月正式GA），开发者可通过Zapier、Make或自定义集成以编程方式批量生成演示文稿、文档和网站，30-60秒内生成带完整布局和图片的Deck。Gamma现拥有7000万+用户，四档定价（免费/$8/$15/Ultra）覆盖个人到团队。与Kimi Slides相比，Gamma拥有对话式编辑能力（"缩短这一段"/"改成双栏布局"），Kimi生成后需手动编辑，体验差距明显。</p>
+      <strong>学习指南要点：</strong>
+      <ul>
+        <li>优先使用Gamma Agent完成有引用需求的研究型演示文稿（含来源链接自动插入）</li>
+        <li>利用Generate API构建内部批量生成工具（如每周简报、竞品报告自动化流水线）</li>
+        <li>对比测试Kimi Slides和Gamma：中文内容首选Kimi，精细化国际化演示用Gamma</li>
+        <li>关注Gamma Pro的团队协作功能，评估是否可替代部分PPT制作场景</li>
+        <li>注意：Gamma输出可直接导出为PPT/Google Slides，与现有工作流无缝衔接</li>
       </ul>
-      <div class="pm-meta">来源日期：2026-01～02 | <a href="https://max-productive.ai/ai-tools/gamma/" target="_blank">🔗 Gamma Review 2026</a></div>
+      <div class="meta">来源日期：2026-03-04 | <a href="https://max-productive.ai/ai-tools/gamma/" target="_blank">查看原文 →</a></div>
     </div>
 
-    <div class="pm-tool">
-      <div class="pm-tool-header">
-        <span class="pm-tool-num">02</span>
-        <span class="pm-tool-tag">Vibe Coding</span>
-      </div>
-      <div class="pm-tool-title">Lovable估值66亿美元，Vibe Coding从实验走向生产主流</div>
-      <div class="pm-tool-summary">2026年3月，Vibe Coding已正式进入主流开发工作流，84%的开发者正在使用或计划使用AI编码工具。Lovable以$6.6B估值、$200M ARR领军赛道；Cursor主导IDE集成工作流；Bolt.new擅长浏览器端快速原型；Vercel v0专注安全合规已拦截超10万次不安全部署。行业形成"Lovable快速原型→Cursor生产部署"分工协作共识。</div>
-      <div class="guide-title">📚 学习指南要点：</div>
-      <ul class="guide-list">
-        <li>PM可用Lovable快速验证产品功能原型，无需等待研发资源，节省评审前置时间</li>
-        <li>掌握"自然语言→可运行原型"的提示词工程，提升需求可视化效率</li>
-        <li>了解Vibe Coding能力边界：适合中小型CRUD应用，复杂系统仍需工程介入</li>
-        <li>关注Lovable的团队协作功能，评估是否可纳入产品设计流程</li>
-        <li>跟踪v0/Bolt在组件库和设计系统生成上的新进展</li>
+    <div class="tool-card" style="border-top-color:#e94560;">
+      <h4>2. Vibe Coding</h4>
+      <span class="tag" style="background:#e94560;">Replit</span><span class="tag" style="background:#e94560;">Cursor</span><span class="tag" style="background:#e94560;">Bolt</span>
+      <p><strong>Anything荣登2026年度第一Vibe Coding平台，赛道进入洗牌期</strong><br><br>2026年3月3日，Anything平台在对11款主流Vibe Coding工具的独立专家评测中荣获第一，评测维度包括流畅度保持、生产级可扩展性、自主智能程度和端到端部署能力，内置Stripe支付和前沿AI模型（GPT-4o、o3、Claude Sonnet 4、Gemini 2.5）。Cursor ARR超20亿美元，Lovable估值66亿美元，Bolt 4.5个月ARR达4000万美元，赛道头部效应加剧。同时Vibe Coding引发开源生态危机讨论，AI工具大量绕过开源代码正常贡献流程。</p>
+      <strong>学习指南要点：</strong>
+      <ul>
+        <li>评估Lovable（非开发者全栈构建）vs Cursor（代码调试增强）vs Replit（全栈含数据库）的适用场景</li>
+        <li>PM可用Lovable快速搭建产品功能原型直接演示给利益相关者，替代传统Figma线框稿</li>
+        <li>关注Bolt在截图转UI场景的速度优势，适合快速UI验证</li>
+        <li>用Anything平台实现前端+支付+AI的一体化快速交付</li>
+        <li>注意AI生成代码的安全审查，不要将低质量代码直接推送生产环境</li>
       </ul>
-      <div class="pm-meta">来源日期：2026-03-04 | <a href="https://lovable.dev/guides/best-vibe-coding-tools-2026-build-apps-chatting" target="_blank">🔗 Best Vibe Coding Tools 2026 - Lovable</a></div>
+      <div class="meta">来源日期：2026-03-03 | <a href="https://www.openpr.com/news/4411376/anything-named-1-vibe-coding-platform-of-2026-by-independent" target="_blank">查看原文 →</a></div>
     </div>
 
-    <div class="pm-tool">
-      <div class="pm-tool-header">
-        <span class="pm-tool-num">03</span>
-        <span class="pm-tool-tag">本地优先AI智能体</span>
-      </div>
-      <div class="pm-tool-title">Claude Computer Use接近人类水平，Vercept收购加速桌面AI落地</div>
-      <div class="pm-tool-summary">Anthropic于2月25日收购专注视觉感知自动化的Vercept，9人团队并入以加速Claude计算机操控能力。Claude Sonnet 4.6在OSWorld基准达72.5%（2024年底仅15%），可完成跨浏览器Tab复杂多步骤工作流。1M Token上下文支持将完整代码库或技术文档一次性送入。MCP协议（模型上下文协议）在企业AI集成中加速普及，切割量达15%延迟降低。</div>
-      <div class="guide-title">📚 学习指南要点：</div>
-      <ul class="guide-list">
-        <li>关注Claude Computer Use在产品运营自动化场景（数据采集、表单填写、跨平台数据同步）的应用</li>
-        <li>评估Vercept收购对Claude视觉感知能力的提升预期，跟踪后续产品发布</li>
-        <li>了解OSWorld基准含义，作为评估AI Agent桌面操控能力的标准参考</li>
-        <li>探索MCP协议与Claude Computer Use结合，构建企业内部自动化工作流</li>
-        <li>关注本地部署安全性议题：处理企业敏感数据时的隐私保护方案</li>
+    <div class="tool-card" style="border-top-color:#10b981;">
+      <h4>3. 本地优先AI智能体平台</h4>
+      <span class="tag" style="background:#10b981;">MCP</span><span class="tag" style="background:#10b981;">本地部署</span>
+      <p><strong>MCP安全风险上升，本地优先部署需求凸显</strong><br><br>随着MCP（Anthropic模型上下文协议）智能体规模化部署，安全机构发现MCP存在过度权限、操作日志不完整、敏感工作流被代理执行等新型安全风险，被称为"AI身份暗物质"——强大、无处不在、却难以管控。目前已有超过23%的企业计划在2026年部署MCP智能体。本地优先（local-first）AI平台在数据隐私和合规方面具备天然优势，尤其适合金融、医疗、政务等强监管行业。</p>
+      <strong>学习指南要点：</strong>
+      <ul>
+        <li>部署MCP时明确权限最小化原则，避免智能体访问超出任务所需的数据范围</li>
+        <li>建立MCP操作日志审计机制，记录智能体的每次工具调用行为</li>
+        <li>关注Anthropic和Google在MCP/A2A标准上的进展，选择符合未来标准的集成方案</li>
+        <li>强合规场景（金融/医疗）优先选择支持本地模型推理的平台，确保数据不出境</li>
+        <li>评估现有SaaS产品对MCP的集成路线图，提前规划智能体能力落地时间表</li>
       </ul>
-      <div class="pm-meta">来源日期：2026-03-03 | <a href="https://channelpostmea.com/2026/03/03/anthropic-acquires-vercept-to-advance-claudes-computer-use-capabilities/" target="_blank">🔗 Anthropic Acquires Vercept</a></div>
+      <div class="meta">来源日期：2026-03-04 | <a href="https://thehackernews.com/2026/03/ai-agents-next-wave-identity-dark.html" target="_blank">查看原文 →</a></div>
     </div>
 
-    <div class="pm-tool">
-      <div class="pm-tool-header">
-        <span class="pm-tool-num">04</span>
-        <span class="pm-tool-tag">AI PPT制作</span>
-      </div>
-      <div class="pm-tool-title">Kimi + Gamma双雄并立，中文演示内容生成进入成熟期</div>
-      <div class="pm-tool-summary">2026年AI PPT赛道格局趋稳：Gamma主导英文/国际化场景，Kimi（月之暗面）凭借K2.5长上下文在中文内容生成质量上突出，成为国内PM和营销团队首选。Gamma已与Figma、Miro等深度集成，支持互动式演示；Kimi可处理大量素材生成逻辑严密的演讲稿+PPT结构。两者均支持一键导出PPTX格式，填补了AI内容创作到正式呈现的"最后一公里"。</div>
-      <div class="guide-title">📚 学习指南要点：</div>
-      <ul class="guide-list">
-        <li>建立"中文内容用Kimi，国际化演示用Gamma"的双工具工作流</li>
-        <li>利用Gamma Generate API，探索批量生成客户提案、竞品分析报告的可能性</li>
-        <li>将AI PPT生成与产品发布节奏绑定，大幅缩短宣讲材料准备周期</li>
-        <li>关注AI PPT工具在数据可视化（图表、数据故事）上的能力边界</li>
-        <li>尝试"AI生成骨架+人工精修内容"的混合工作流，平衡效率与质量</li>
+    <div class="tool-card" style="border-top-color:#f59e0b;">
+      <h4>4. AI PPT制作</h4>
+      <span class="tag" style="background:#f59e0b;">Gamma</span><span class="tag" style="background:#f59e0b;">Kimi</span>
+      <p><strong>Kimi K2.5升级+Gamma API开放，AI演示工具进入智能体驱动阶段</strong><br><br>月之暗面Kimi K2.5带来视频理解和智能体能力升级，已跻身OpenRouter平台第四大最常用模型。Gamma同期推出Generate API（正式GA），PM和运营团队可通过API批量生成品牌一致的演示内容。两款工具各有侧重：Kimi Slides支持.pptx导出且与PowerPoint无缝兼容；Gamma优势在于对话式编辑和联网内容生成。随着视频内容需求增加，AI视频生成与AI PPT边界正在模糊，"动态演示"将成下一形态。</p>
+      <strong>学习指南要点：</strong>
+      <ul>
+        <li>根据用途选工具：日常内部简报→Gamma（快速+可引用）；对外发布演示→Kimi（精美设计+pptx兼容）</li>
+        <li>用Gamma API构建自动化简报流水线，实现从数据洞察到可视化的一键生成</li>
+        <li>关注Kimi K2.5的视频理解能力，探索"视频转演示文稿"新场景</li>
+        <li>将AI演示工具纳入营销内容生产工作流，缩短从洞察到可视化呈现的时间</li>
+        <li>测试Gamma Agent的联网引用功能，用于客户提案和行业报告生成</li>
       </ul>
-      <div class="pm-meta">来源日期：2026-03-04 | <a href="https://getalai.com/blog/best-ai-presentation-makers" target="_blank">🔗 Best AI Presentation Makers of 2026</a></div>
+      <div class="meta">来源日期：2026-03-04 | <a href="https://gamma.app/" target="_blank">查看原文 →</a></div>
     </div>
 
-    <div class="pm-tool">
-      <div class="pm-tool-header">
-        <span class="pm-tool-num">05</span>
-        <span class="pm-tool-tag">产品宣传稿AI创作</span>
-      </div>
-      <div class="pm-tool-title">小红书AI文案渗透率激增，豆包/Kimi领跑短内容生成赛道</div>
-      <div class="pm-tool-summary">2026年AI文案工具进入"场景垂直化"竞争阶段。豆包专注短视频、广告等短内容，语气自然情感拟真度高；Kimi凭借长上下文优势适合长篇产品介绍、白皮书、深度内容；讯飞星火在中文处理和PPT文案有明显优势；秘塔写作猫提供200+写作模板覆盖论文、报告、营销文案等场景。AI文案已在小红书、微信公众号、短视频平台大规模落地。</div>
-      <div class="guide-title">📚 学习指南要点：</div>
-      <ul class="guide-list">
-        <li>掌握豆包/Kimi在营销文案场景的提示词模板，构建团队专属Prompt库</li>
-        <li>将AI文案工具纳入内容营销SOP，明确人工审核节点，保障品牌一致性</li>
-        <li>关注AI文案在"情感化表达"和"场景化叙事"上的能力边界，识别需要人工介入的场景</li>
-        <li>探索AI文案工具的A/B测试能力，快速生成多版本文案进行效果验证</li>
-        <li>警惕AI文案同质化风险，建立差异化品牌声音设定（Brand Voice Prompt）</li>
+    <div class="tool-card" style="border-top-color:#8b5cf6;">
+      <h4>5. 产品宣传稿AI创作工具</h4>
+      <span class="tag" style="background:#8b5cf6;">Claude</span><span class="tag" style="background:#8b5cf6;">HubSpot Breeze</span><span class="tag" style="background:#8b5cf6;">ChatGPT</span>
+      <p><strong>AI写作工具进入"个性化+记忆"竞争新阶段</strong><br><br>Claude推出跨平台对话历史迁移功能（可导入ChatGPT/Gemini历史记录），自动提取用户写作风格偏好，AI内容创作工具正从"通用生成"进化为"个性化创作伙伴"。HubSpot正围绕AI重构增长模型，旗下Breeze AI助理已深度集成内容创作、SEO优化和销售邮件生成场景。ChatGPT Projects新增"Living Sources"功能，可统一管理Slack、Google Drive等多源内容上下文，AI写作工具的生态整合能力持续提升。</p>
+      <strong>学习指南要点：</strong>
+      <ul>
+        <li>将Claude或ChatGPT设置为团队统一的内容创作助手，利用记忆和项目功能积累品牌语境（Brand Memory）</li>
+        <li>用HubSpot Breeze实现销售邮件和着陆页文案的AI辅助生成，与CRM数据联动</li>
+        <li>测试Claude Sonnet 4.6在不同文体（技术文档/营销文案/客户案例）的创作表现</li>
+        <li>建立AI宣传稿工作流：AI生成草稿→人工审核品牌调性→AI优化SEO→发布</li>
+        <li>关注"AI写作+品牌记忆"组合，让AI真正学会品牌声音，避免每次从零开始</li>
       </ul>
-      <div class="pm-meta">来源日期：2026-03-04 | <a href="https://www.stcn.com/article/detail/1261073.html" target="_blank">🔗 AI文案正在攻占小红书</a></div>
+      <div class="meta">来源日期：2026-03-02 至 2026-03-05 | <a href="https://www.webanditnews.com/2026/03/02/anthropics-bold-memory-play-claude-now-ingests-your-chatgpt-history-to-win-the-ai-loyalty-war/" target="_blank">查看原文 →</a></div>
     </div>
-
   </div>
 </div>
 
 <div class="footer">
-  <strong>营销运作与场景化部每日洞察简报</strong><br>
-  本报告由 Claude AI 自动生成 · 数据范围：2026-03-04 至 2026-03-05 · 请结合原文链接核实准确性<br>
-  生成时间：2026年03月05日
+  <p>📊 营销运作与场景化部每日洞察简报 · 数据范围：2026-03-04 至 2026-03-05</p>
+  <p style="margin-top:6px;">🤖 由 Claude AI 自动生成，请结合原文链接核实准确性。</p>
 </div>
 
 <script>
-function switchTab(id, btn) {
-  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  btn.classList.add('active');
+function switchTab(event, tabId) {
+  document.querySelectorAll('.tab-content').forEach(function(el) { el.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(el) { el.classList.remove('active'); });
+  document.getElementById(tabId).classList.add('active');
+  event.currentTarget.classList.add('active');
 }
 </script>
 </body>
