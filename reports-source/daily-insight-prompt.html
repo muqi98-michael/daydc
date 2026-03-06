@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>每日洞察简报 · Prompt 记录</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif; background: #f5f6fa; color: #2d3748; line-height: 1.8; }
+    header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%); color: #fff; padding: 32px 40px 24px; }
+    header h1 { font-size: 20px; font-weight: 700; }
+    header .meta { margin-top: 8px; font-size: 13px; color: #a0aec0; }
+    header .badge { display: inline-block; margin-top: 10px; background: rgba(99,179,237,0.2); border: 1px solid rgba(99,179,237,0.4); color: #90cdf4; border-radius: 20px; padding: 3px 14px; font-size: 12px; }
+    .container { max-width: 860px; margin: 28px auto; padding: 0 20px 60px; }
+    .alert { background: #fff5f5; border-left: 4px solid #fc8181; border-radius: 8px; padding: 14px 18px; margin-bottom: 28px; font-size: 14px; color: #c53030; }
+    .alert strong { display: block; margin-bottom: 4px; }
+    .chapter { margin-bottom: 36px; }
+    .chapter-title { font-size: 17px; font-weight: 700; color: #fff; background: linear-gradient(90deg, #2b6cb0, #2c5282); padding: 10px 18px; border-radius: 8px; margin-bottom: 16px; }
+    .section-title { font-size: 15px; font-weight: 700; color: #2d3748; margin: 20px 0 10px; padding-left: 10px; border-left: 3px solid #4299e1; }
+    .card { background: #fff; border-radius: 10px; padding: 18px 22px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+    .card p, .card li { font-size: 13.5px; color: #4a5568; }
+    .card ul { padding-left: 18px; margin-top: 8px; }
+    .card li { margin-bottom: 4px; }
+    .vendor-tag { display: inline-block; background: #ebf8ff; color: #2b6cb0; border-radius: 4px; padding: 2px 10px; font-size: 12px; font-weight: 600; margin-bottom: 10px; }
+    .vendor-tag.required { background: #ebf8ff; color: #2b6cb0; }
+    .vendor-tag.optional { background: #f0fff4; color: #276749; }
+    .format-block { background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 18px; font-size: 13px; color: #4a5568; font-family: "SF Mono", "Fira Code", monospace; white-space: pre-wrap; margin-top: 10px; }
+    .output-box { background: #fffaf0; border: 1px solid #f6e05e; border-radius: 8px; padding: 16px 20px; margin-top: 8px; }
+    .output-box h4 { font-size: 14px; font-weight: 700; color: #744210; margin-bottom: 10px; }
+    .output-box li { font-size: 13.5px; color: #744210; margin-bottom: 6px; }
+    .output-box ul { padding-left: 18px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+    th { background: #2d3748; color: #fff; padding: 10px 14px; text-align: left; }
+    td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; color: #4a5568; }
+    tr:last-child td { border-bottom: none; }
+    footer { text-align: center; font-size: 12px; color: #a0aec0; padding: 20px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>营销运作与场景化部 · 每日洞察简报 Prompt</h1>
+  <div class="meta">适用任务：daily-pm-insight-report · 每日 08:00 自动执行</div>
+  <div class="badge">📅 记录于 2026-03-05</div>
+</header>
+
+<div class="container">
+
+  <div class="alert">
+    <strong>⚠️ 日期约束（最高优先级）</strong>
+    所有搜索内容只采用今天和昨天发布的资讯，不收录更早日期的文章。如当日无相关内容，直接标注"暂无"，不以旧内容填充。每次执行时先用 Bash 命令 <code>date +%Y-%m-%d</code> 获取今天的实际日期，推算昨天日期。
+  </div>
+
+  <!-- Chapter 1 -->
+  <div class="chapter">
+    <div class="chapter-title">📊 第一章：全球AI趋势 Top 10</div>
+    <div class="card">
+      <p>扮演资深AI产业分析师，搜索并整理今日和昨日全球AI领域最重要的10条热点动态，以表格形式输出：</p>
+      <div style="margin-top:12px; overflow-x:auto;">
+        <table>
+          <thead><tr><th>排名</th><th>热点标题</th><th>涉及厂商</th><th>技术方向</th><th>核心看点（100字）</th><th>来源日期</th><th>原文链接</th></tr></thead>
+          <tbody><tr><td colspan="7" style="text-align:center;color:#a0aec0;font-style:italic;">（AI自动填充）</td></tr></tbody>
+        </table>
+      </div>
+      <p style="margin-top:12px;">覆盖方向：大模型发布与迭代、AI Agent进展、多模态能力、开源模型、AI商业化、中美AI竞争、融资收购等。每条须附原文链接并确认来源日期为今天或昨天。</p>
+    </div>
+  </div>
+
+  <!-- Chapter 2 -->
+  <div class="chapter">
+    <div class="chapter-title">☁️ 第二章：企业SaaS热点洞察</div>
+
+    <div class="section-title">一、PEST宏观环境洞察（聚焦中国）</div>
+    <div class="card">
+      <p>分别从政治（Policy）、经济（Economy）、社会（Society）、技术（Technology）四个维度，各写一段150字左右的洞察，附来源链接，重点关注对中国企业SaaS市场的影响。</p>
+    </div>
+
+    <div class="section-title">二、重点公司动态跟踪</div>
+    <div class="card">
+      <p style="margin-bottom:10px;"><strong>必选厂商（每家均需覆盖）：</strong></p>
+      <span class="vendor-tag required">SAP</span>&nbsp;
+      <span class="vendor-tag required">Salesforce</span>&nbsp;
+      <span class="vendor-tag required">用友</span>&nbsp;
+      <span class="vendor-tag required">金蝶</span>
+      <p style="margin:14px 0 8px;"><strong>可选补充厂商（至少选2家）：</strong></p>
+      <span class="vendor-tag optional">微软 Dynamics 365</span>&nbsp;
+      <span class="vendor-tag optional">Oracle NetSuite</span>&nbsp;
+      <span class="vendor-tag optional">Workday</span>&nbsp;
+      <span class="vendor-tag optional">ServiceNow</span>&nbsp;
+      <span class="vendor-tag optional">HubSpot</span>&nbsp;
+      <span class="vendor-tag optional">销售易 / 纷享销客</span>&nbsp;
+      <span class="vendor-tag optional">其他重大动态厂商</span>
+      <div class="format-block" style="margin-top:16px;">**[厂商名]**
+
+热点总结：约200字，覆盖维度：
+- 产品发布与迭代（新版本、AI功能集成、行业解决方案）
+- 市场宣传与战略（发布会、合作签约、定价调整、客户案例）
+- AI落地重点（Joule / Einstein / YonGPT 等、智能助手、自动化工作流）
+- 其他热点（财报、并购、区域市场、合规动态）
+
+TOP 3热点列表：
+1. 热点标题 + 原始链接
+2. 热点标题 + 原始链接
+3. 热点标题 + 原始链接</div>
+    </div>
+
+    <div class="section-title">三、营销启示与行动建议</div>
+    <div class="card">
+      <p>基于本日洞察，输出3条面向营销运作与场景化部的具体行动建议，每条150字左右，需有明确洞察依据和可操作的落地动作。</p>
+    </div>
+  </div>
+
+  <!-- Chapter 3 -->
+  <div class="chapter">
+    <div class="chapter-title">🛠️ 第三章：AI原生PM工具与工作模式</div>
+    <div class="card">
+      <p>扮演深度使用AI工具的资深产品经理，搜索今日和昨日关于AI原生PM工具与工作模式的热点，选取5个最有价值的话题，每个话题按以下格式输出：</p>
+      <div class="format-block" style="margin-top:12px;">**N. 【话题分类标签】话题标题**
+
+热点摘要：约200字，介绍工具/方法/趋势的核心内容、市场地位、典型使用场景。
+
+学习指南要点：
+- 要点1（对PM的实操建议）
+- 要点2
+- 要点3
+- 要点4
+- 要点5
+
+来源日期：YYYY-MM-DD
+原文链接：链接</div>
+      <p style="margin-top:12px;font-size:13px;color:#718096;">话题分类标签参考：AI产品原型设计、Vibe Coding、AI Agent平台、AI PPT制作、产品宣传稿AI创作、AI用研工具、AI数据分析、AI项目管理等。</p>
+    </div>
+  </div>
+
+  <!-- Output Requirements -->
+  <div class="chapter">
+    <div class="chapter-title">📁 输出要求</div>
+    <div class="output-box">
+      <h4>文件保存至 /Users/muqi/CoCwork/Reports/</h4>
+      <ul>
+        <li><strong>daily-insight-YYYY-MM-DD.md</strong> — 完整Markdown格式</li>
+        <li><strong>daily-insight-YYYY-MM-DD.html</strong> — 带样式的HTML（深色header + 卡片式布局），方便直接浏览</li>
+        <li>报告标题注明生成时间和数据范围（今天及昨天日期）</li>
+        <li>所有内容必须附原文链接，无法找到链接的内容不收录</li>
+        <li>报告末尾注明"本报告由 Claude AI 自动生成，请结合原文链接核实准确性"</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<footer>营销运作与场景化部 · 每日洞察简报 Prompt · 记录于 2026-03-05</footer>
+
+</body>
+</html>
