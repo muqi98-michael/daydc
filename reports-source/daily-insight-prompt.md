@@ -134,8 +134,159 @@ TOP 3热点列表：
 
 1. 同时生成两个文件保存到 `/Users/muqi/CoCwork/Reports/` 目录：
    - `daily-insight-YYYY-MM-DD.md`（完整Markdown格式）
-   - `daily-insight-YYYY-MM-DD.html`（带样式的HTML，方便直接浏览，深色header + 卡片式布局）
+   - `daily-insight-YYYY-MM-DD.html`（带样式的HTML，多Tab页导航布局，见下方 HTML 结构规范）
 2. 报告标题注明生成时间和数据范围（今天日期及昨天日期）
 3. 所有内容必须附原文链接，无法找到链接的内容不收录
 4. 所有内容展现除专业厂商名（如Google）和术语（如OpenAI）保持英文外，具体的内容要用中文呈现
 5. 报告末尾注明"本报告由 AI 自动生成，请结合原文链接核实准确性"
+
+---
+
+## HTML 结构规范（多 Tab 页导航布局）
+
+HTML 文件必须采用**多导航 Tab 布局**，每章对应一个 Tab，点击 Tab 切换内容，同时只显示一章。禁止使用单页垂直堆叠所有章节的方式。
+
+### 整体页面骨架
+
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>营销运作与场景化部每日洞察简报 YYYY-MM-DD</title>
+  <style>/* 见下方 CSS 规范 */</style>
+</head>
+<body>
+
+<!-- 1. 深色渐变 Header -->
+<header class="site-header">
+  <div class="header-meta">金蝶国际 · 营销运作与场景化部 · AI研究助手出品</div>
+  <h1>🏴 每日洞察简报</h1>
+  <div class="subtitle">全球AI趋势 · 企业SaaS热点 · AI营销运作 · AI产品管理</div>
+  <div class="header-badges">
+    <span class="badge badge-orange">YYYY年M月D日</span>
+    <span class="badge badge-blue">数据范围：M月D-1日—M月D日</span>
+    <span class="badge badge-gray">金蝶视角 · 每日自动生成</span>
+  </div>
+</header>
+
+<!-- 2. Tab 导航栏（固定在 Header 下方） -->
+<nav class="tab-nav">
+  <div class="tab-nav-inner">
+    <button class="tab-btn active" onclick="showTab('ch1', this)">
+      🌐 第一章：全球AI趋势
+    </button>
+    <button class="tab-btn" onclick="showTab('ch2', this)">
+      🏢 第二章：企业SaaS洞察
+    </button>
+    <button class="tab-btn" onclick="showTab('ch3', this)">
+      📢 第三章：AI营销运作
+    </button>
+    <button class="tab-btn" onclick="showTab('ch4', this)">
+      🔧 第四章：AI产品管理
+    </button>
+  </div>
+</nav>
+
+<!-- 3. 主内容区：每章一个 tab-panel，默认只显示第一章 -->
+<main class="container">
+
+  <div id="ch1" class="tab-panel active">
+    <!-- 第一章全部内容 -->
+  </div>
+
+  <div id="ch2" class="tab-panel">
+    <!-- 第二章全部内容 -->
+  </div>
+
+  <div id="ch3" class="tab-panel">
+    <!-- 第三章全部内容 -->
+  </div>
+
+  <div id="ch4" class="tab-panel">
+    <!-- 第四章全部内容 -->
+  </div>
+
+</main>
+
+<!-- 4. 底部 footer -->
+<footer class="site-footer">
+  本报告由 AI 自动生成，请结合原文链接核实准确性
+</footer>
+
+<script>
+function showTab(tabId, btn) {
+  // 隐藏所有 panel
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  // 取消所有按钮激活状态
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  // 显示目标 panel 并激活按钮
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+
+</body>
+</html>
+```
+
+### 关键 CSS 规范
+
+```css
+/* Tab 导航栏 */
+.tab-nav {
+  background: #1a2f4a;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.tab-nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  gap: 4px;
+  padding: 0 20px;
+  overflow-x: auto;
+}
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.65);
+  padding: 14px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.tab-btn:hover { color: #fff; }
+.tab-btn.active {
+  color: #fff;
+  border-bottom-color: #e8622a;
+  background: rgba(255,255,255,0.08);
+}
+
+/* Tab panel 显示/隐藏 */
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* 主内容区 */
+.container { max-width: 1100px; margin: 0 auto; padding: 32px 20px 60px; }
+
+/* Footer */
+.site-footer {
+  text-align: center;
+  padding: 20px;
+  color: #6b7280;
+  font-size: 13px;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 40px;
+}
+```
+
+### 各章节内容组件
+
+每个 `.tab-panel` 内的卡片、表格、PEST格、公司卡片等组件样式保持不变，沿用当前报告中已有的样式（趋势表格、insight-box、pest-grid、company-card、hotspot-card 等），仅把各章内容放入对应的 `.tab-panel` 中即可。
